@@ -1,0 +1,7 @@
+{
+  "name": "智能名片v1.1.2",
+  "description": "A sophisticated personal profile and smart business card management system for local residents and enthusiasts.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
