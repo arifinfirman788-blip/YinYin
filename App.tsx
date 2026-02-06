@@ -73,7 +73,8 @@ const App: React.FC = () => {
             card={cardToShow} 
             mode={previewMode}
             onConfirm={handleCardConfirm} 
-            onBack={() => setCurrentPage(previewMode === 'own' ? Page.CARD_CREATE : Page.CARD_DETAIL)} 
+            onBack={() => setCurrentPage(previewMode === 'own' ? Page.CARD_CREATE : Page.CARD_DETAIL)}
+            onGoToMyCard={() => setCurrentPage(Page.CARD_DETAIL)}
           />
         ) : null;
       case Page.CARD_DETAIL:
