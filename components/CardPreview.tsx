@@ -127,29 +127,11 @@ const CardPreview: React.FC<CardPreviewProps> = ({ card, mode = 'own', onConfirm
         <div className="flex gap-3">
            {isOwn && (
              <button 
-               onClick={() => alert('已保存到相册')}
-               className="flex-1 flex flex-col items-center justify-center py-4 bg-gray-50 rounded-2xl border border-gray-100 text-gray-600 active:scale-95 transition-all shadow-sm"
-             >
-               <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-               <span className="text-[11px] font-black uppercase tracking-widest">保存名片</span>
-             </button>
-           )}
-           
-           <button 
-             onClick={() => alert('分享已准备')}
-             className="flex-1 flex flex-col items-center justify-center py-4 bg-gray-50 rounded-2xl border border-gray-100 text-gray-600 active:scale-95 transition-all shadow-sm"
-           >
-             <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-             <span className="text-[11px] font-black uppercase tracking-widest">分享名片</span>
-           </button>
-
-           {isOwn && (
-             <button 
                onClick={() => onConfirm(card)}
-               className="flex-1 flex flex-col items-center justify-center py-4 bg-gray-50 rounded-2xl border border-gray-100 text-gray-600 active:scale-95 transition-all shadow-sm"
+               className="flex-1 flex flex-col items-center justify-center py-4 bg-blue-600 rounded-2xl border border-blue-600 text-white active:scale-95 transition-all shadow-lg shadow-blue-200"
              >
-               <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-               <span className="text-[11px] font-black uppercase tracking-widest">我的名片</span>
+               <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+               <span className="text-sm font-black uppercase tracking-widest">确认生成</span>
              </button>
            )}
         </div>
