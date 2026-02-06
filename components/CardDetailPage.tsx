@@ -107,16 +107,7 @@ const CardDetailPage: React.FC<CardDetailPageProps> = ({ card, onEdit, onPreview
         )}
 
         {/* 核心操作按钮 */}
-        <div className="grid grid-cols-4 gap-3">
-           <button 
-             onClick={() => setShowWechatModal(true)}
-             className="flex flex-col items-center gap-1.5 p-3 bg-white rounded-2xl border border-gray-100 shadow-sm active:scale-95 transition-all group"
-           >
-             <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center text-green-500 group-hover:scale-110 transition-transform">
-               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.27 10.15a.9.9 0 100-1.79.9.9 0 000 1.79zm7.46 0a.9.9 0 100-1.79.9.9 0 000 1.79zM12 4.1a8.55 8.55 0 00-8.6 8.3c0 1.55.43 3.01 1.2 4.26L3.5 19.5l3.15-1.01A8.53 8.53 0 0012 20.7a8.55 8.55 0 008.6-8.3 8.55 8.55 0 00-8.6-8.3zm0 14.8c-1.35 0-2.61-.35-3.7-.97l-2.14.68.7-2.07A6.74 6.74 0 015.1 12.4a6.79 6.79 0 0113.8 0 6.79 6.79 0 01-6.9 6.5zm7.3-8.86a.65.65 0 100-1.3.65.65 0 000 1.3z" /></svg>
-             </div>
-             <span className="text-[10px] font-bold text-gray-600">微信授权</span>
-           </button>
+        <div className="grid grid-cols-2 gap-3">
            <button 
              onClick={onEdit}
              className="flex flex-col items-center gap-1.5 p-3 bg-white rounded-2xl border border-gray-100 shadow-sm active:scale-95 transition-all group"
@@ -125,15 +116,6 @@ const CardDetailPage: React.FC<CardDetailPageProps> = ({ card, onEdit, onPreview
                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
              </div>
              <span className="text-[10px] font-bold text-gray-600">修改</span>
-           </button>
-           <button 
-             onClick={() => card ? onPreview() : onEdit()}
-             className="flex flex-col items-center gap-1.5 p-3 bg-white rounded-2xl border border-gray-100 shadow-sm active:scale-95 transition-all group"
-           >
-             <div className="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center text-purple-500 group-hover:scale-110 transition-transform">
-               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-             </div>
-             <span className="text-[10px] font-bold text-gray-600">预览</span>
            </button>
            <button 
              onClick={() => card ? setShowShareModal(true) : onEdit()}
