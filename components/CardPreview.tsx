@@ -131,10 +131,13 @@ const CardPreview: React.FC<CardPreviewProps> = ({ card, mode = 'own', onConfirm
            {isOwn ? (
              <button 
                onClick={() => onConfirm(card)}
-               className="flex-1 flex flex-col items-center justify-center py-4 bg-blue-600 rounded-2xl border border-blue-600 text-white active:scale-95 transition-all shadow-lg shadow-blue-200"
+               className="flex-1 relative overflow-hidden flex flex-col items-center justify-center py-4 bg-gradient-to-br from-gray-900 to-blue-900 rounded-2xl text-white shadow-xl active:scale-95 transition-all group"
              >
-               <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-               <span className="text-sm font-black uppercase tracking-widest">确认生成</span>
+               <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+               <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center mb-1.5 backdrop-blur-sm border border-white/10 group-hover:scale-110 transition-transform">
+                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>
+               </div>
+               <span className="text-xs font-black tracking-widest">确认生成</span>
              </button>
            ) : (
              <>
