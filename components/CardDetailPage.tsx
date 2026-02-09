@@ -233,15 +233,31 @@ const CardDetailPage: React.FC<CardDetailPageProps> = ({ card, onEdit, onPreview
       )}
 
       {/* 分享弹窗 */}
-      {showShareModal && (
+      {showShareModal && card && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end animate-in fade-in duration-300">
           <div className="bg-white w-full max-w-md mx-auto rounded-t-[3rem] p-8 animate-in slide-in-from-bottom duration-300">
-             <div className="flex items-center justify-between mb-8">
+             <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-black text-gray-900">分享名片</h3>
                 <button onClick={() => setShowShareModal(false)} className="p-2 text-gray-400">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
              </div>
+
+             {/* 名片预览图 */}
+             <div className="w-full aspect-[1.6/1] rounded-2xl overflow-hidden shadow-lg mb-4 relative">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${card.background})` }}
+                ></div>
+                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                   <p className="text-lg font-bold">{card.name}</p>
+                   <p className="text-xs opacity-90">{card.position} · {card.organization}</p>
+                </div>
+             </div>
+             
+             <p className="text-center text-xs text-gray-400 mb-8 font-medium">长按图片分享给好友</p>
+
              <div className="grid grid-cols-4 gap-6 mb-8">
                 {[
                   { icon: '📱', name: '生成海报', color: 'bg-orange-50' },
