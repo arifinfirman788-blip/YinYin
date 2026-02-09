@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { BusinessCard } from '../types';
-import { GoogleGenAI } from "@google/genai";
 
 interface CardPreviewProps {
   card: BusinessCard;
@@ -11,55 +10,10 @@ interface CardPreviewProps {
   onGoToMyCard?: () => void;
 }
 
-interface Message {
-  role: 'user' | 'assistant';
-  text: string;
-}
-
 const CardPreview: React.FC<CardPreviewProps> = ({ card, mode = 'own', onConfirm, onBack, onGoToMyCard }) => {
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', text: `您好！我是黄小西，任何关于贵州旅游的问题都可以问我哦！` }
-  ]);
-  const [inputValue, setInputValue] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showWechatModal, setShowWechatModal] = useState(false);
   
-  const lastAssistantMessage = [...messages].reverse().find(m => m.role === 'assistant')?.text || "";
-
-  const handleSendMessage = async () => {
-    if (!inputValue.trim() || isTyping) return;
-
-    const userMsg = inputValue.trim();
-    setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
-    setInputValue('');
-    setIsTyping(true);
-
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: [
-          {
-            role: 'user',
-            parts: [{ text: `你叫黄小西，是LocalPro Connect的AI助手，也是贵州旅游达人。用户现在的名片信息是：姓名 ${card.name}, 职位 ${card.position}, 公司 ${card.organization}。用户说：${userMsg}` }]
-          }
-        ],
-        config: {
-          systemInstruction: "你是一个热情、专业的社交及贵州旅游助手黄小西。语气要轻快、幽默，多使用表情符号。你的回复要简短，适合放在对话气泡里。如果用户询问旅游建议，请提供地道的贵州当地推荐。"
-        }
-      });
-
-      const aiText = response.text || "哎呀，刚才走神了，再说一遍好吗？";
-      setMessages(prev => [...prev, { role: 'assistant', text: aiText }]);
-    } catch (error) {
-      console.error("Gemini Error:", error);
-      setMessages(prev => [...prev, { role: 'assistant', text: "哎呀，信号不太好，我没听清楚..." }]);
-    } finally {
-      setIsTyping(false);
-    }
-  };
-
   const isOwn = mode === 'own';
 
   return (
@@ -185,82 +139,7 @@ const CardPreview: React.FC<CardPreviewProps> = ({ card, mode = 'own', onConfirm
              </button>
           </div>
         )}
-
-        {/* 3. AI 角色与气泡对话区域 - Only for 'own' mode */}
-        {isOwn && (
-          <div className="relative pt-6 flex flex-col items-center">
-             {/* 对话气泡 */}
-             <div className="relative mb-6 w-full flex justify-center animate-in fade-in slide-in-from-bottom-8 duration-700">
-                <div className="bg-white px-8 py-7 rounded-[3rem] shadow-[0_15px_45px_rgba(0,0,0,0.06)] border border-gray-100 relative z-10 max-w-[92%] min-h-[110px] flex items-center justify-center">
-                  <p className="text-lg font-black text-gray-800 leading-relaxed text-center">
-                     {isTyping ? "黄小西正在思考中..." : lastAssistantMessage}
-                  </p>
-                  <div className="absolute -bottom-4 right-1/4 w-8 h-8 bg-white border-r border-b border-gray-100 transform rotate-[35deg] z-0"></div>
-                </div>
-             </div>
-
-             {/* AI 角色形象 */}
-             <div className="relative w-full h-40 flex justify-end pr-10 mt-2">
-                <div className="w-56 h-full relative group">
-                   <svg viewBox="0 0 200 120" className="w-full h-full drop-shadow-2xl overflow-visible">
-                      <path d="M40 100 Q70 50 160 70 Q200 80 200 110 L40 110 Z" fill="#F87171" />
-                      <circle cx="125" cy="65" r="38" fill="#FFE4E6" />
-                      <path d="M85 55 Q125 0 165 55" stroke="#E2E8F0" strokeWidth="14" fill="none" strokeLinecap="round" />
-                      <circle cx="125" cy="30" r="6" fill="white" stroke="#CBD5E1" strokeWidth="1" />
-                      <circle cx="112" cy="70" r="4.5" fill="#3F3F46" />
-                      <circle cx="138" cy="70" r="4.5" fill="#3F3F46" />
-                      <circle cx="100" cy="80" r="6" fill="#F472B6" opacity="0.4" />
-                      <circle cx="150" cy="80" r="6" fill="#F472B6" opacity="0.4" />
-                      <path d="M120 85 Q125 90 130 85" stroke="#3F3F46" strokeWidth="2" fill="none" strokeLinecap="round" />
-                      <path d="M105 100 Q115 88 125 100" stroke="#FFE4E6" strokeWidth="7" fill="none" strokeLinecap="round" />
-                      <path d="M145 100 Q135 88 125 100" stroke="#FFE4E6" strokeWidth="7" fill="none" strokeLinecap="round" />
-                   </svg>
-                   <div className="absolute -top-4 left-6 animate-pulse text-2xl">☁️</div>
-                   <div className="absolute top-8 -right-2 animate-bounce text-xl">✨</div>
-                </div>
-             </div>
-          </div>
-        )}
       </div>
-
-      {/* 4. 底部输入框 - Only for 'own' mode */}
-      {isOwn && (
-        <div className="absolute bottom-0 left-0 right-0 p-5 bg-white/95 backdrop-blur-3xl border-t border-gray-100 z-40 pb-10">
-          <div className="max-w-md mx-auto flex items-center gap-3">
-             {/* 语音输入按钮 */}
-             <button 
-               onClick={() => alert('语音输入功能正在接入中...')}
-               className="h-12 w-12 bg-gray-100 text-gray-600 rounded-full flex items-center justify-center active:scale-90 transition-all shadow-sm shrink-0 border border-gray-100"
-             >
-               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 10v2a7 7 0 01-14 0v-2M12 18.5V22M8 22h8" />
-               </svg>
-             </button>
-
-             {/* 输入框 */}
-             <div className="flex-1 flex items-center">
-                <input 
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                  placeholder="对黄小西说点什么..."
-                  className="h-12 w-full px-6 bg-gray-100 border-none rounded-2xl text-sm font-black focus:ring-2 focus:ring-blue-500 transition-all outline-none"
-                />
-             </div>
-
-             {/* 发送按钮 */}
-             <button 
-                onClick={handleSendMessage}
-                disabled={!inputValue.trim() || isTyping}
-                className="h-12 w-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all disabled:opacity-30 shrink-0"
-             >
-                <svg className="w-5 h-5 rotate-90" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
-             </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
