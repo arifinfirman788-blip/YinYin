@@ -128,18 +128,7 @@ const CardPreview: React.FC<CardPreviewProps> = ({ card, mode = 'own', onConfirm
 
         {/* 2. 按钮区域 - 样式完全统一 */}
         <div className="flex gap-3">
-           {isOwn ? (
-             <button 
-               onClick={() => onConfirm(card)}
-               className="flex-1 relative overflow-hidden flex flex-col items-center justify-center py-4 bg-gradient-to-br from-gray-900 to-blue-900 rounded-2xl text-white shadow-xl active:scale-95 transition-all group"
-             >
-               <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-               <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center mb-1.5 backdrop-blur-sm border border-white/10 group-hover:scale-110 transition-transform">
-                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>
-               </div>
-               <span className="text-xs font-black tracking-widest">确认生成</span>
-             </button>
-           ) : (
+           {!isOwn && (
              <>
                <button 
                  onClick={() => alert('已收藏到我收到的名片')}
@@ -183,6 +172,19 @@ const CardPreview: React.FC<CardPreviewProps> = ({ card, mode = 'own', onConfirm
              </>
            )}
         </div>
+
+        {/* 确认生成按钮 - 仅在自己的预览模式下显示，且固定在底部 */}
+        {isOwn && (
+          <div className="fixed bottom-0 left-0 right-0 p-5 bg-white/95 backdrop-blur-3xl border-t border-gray-100 z-40 pb-10 flex justify-center">
+             <button 
+               onClick={() => onConfirm(card)}
+               className="w-full max-w-md py-4 bg-[#7786FE] rounded-2xl text-white shadow-xl shadow-[#7786FE]/30 active:scale-95 transition-all group flex items-center justify-center gap-2"
+             >
+               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>
+               <span className="text-base font-bold tracking-widest">确认生成</span>
+             </button>
+          </div>
+        )}
 
         {/* 3. AI 角色与气泡对话区域 - Only for 'own' mode */}
         {isOwn && (
