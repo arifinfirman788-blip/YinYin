@@ -120,6 +120,56 @@ const CardPreview: React.FC<CardPreviewProps> = ({ card, mode = 'own', onConfirm
           </div>
         )}
       </div>
+      {/* 分享弹窗 */}
+      {showShareModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end animate-in fade-in duration-300">
+          <div className="bg-white w-full max-w-md mx-auto rounded-t-[3rem] p-8 animate-in slide-in-from-bottom duration-300">
+             <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-black text-gray-900">分享名片</h3>
+                <button onClick={() => setShowShareModal(false)} className="p-2 text-gray-400">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+             </div>
+
+             {/* 名片预览图 */}
+             <div className="w-full aspect-[1.6/1] rounded-2xl overflow-hidden shadow-lg mb-4 relative">
+                <div 
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${card.background})` }}
+                ></div>
+                <div className="absolute inset-0 bg-black/20"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                   <p className="text-lg font-bold">{card.name}</p>
+                   <p className="text-xs opacity-90">{card.position} · {card.organization}</p>
+                </div>
+             </div>
+             
+             <p className="text-center text-xs text-gray-400 mb-8 font-medium">长按图片分享给好友</p>
+
+             <div className="grid grid-cols-4 gap-6 mb-8">
+                {[
+                  { icon: '📱', name: '生成海报', color: 'bg-orange-50' },
+                  { icon: '💾', name: '保存图片', color: 'bg-blue-50' },
+                  { icon: '💬', name: '微信好友', color: 'bg-green-50' },
+                  { icon: '🎡', name: '朋友圈', color: 'bg-red-50' }
+                ].map(opt => (
+                  <button key={opt.name} className="flex flex-col items-center gap-2 group">
+                    <div className={`w-14 h-14 ${opt.color} rounded-2xl flex items-center justify-center text-2xl group-active:scale-90 transition-transform`}>
+                      {opt.icon}
+                    </div>
+                    <span className="text-[11px] font-bold text-gray-500">{opt.name}</span>
+                  </button>
+                ))}
+             </div>
+             <button 
+               onClick={() => setShowShareModal(false)}
+               className="w-full py-4 bg-gray-50 text-gray-400 font-bold rounded-2xl text-sm"
+             >
+               取消
+             </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
