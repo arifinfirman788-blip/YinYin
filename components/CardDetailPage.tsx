@@ -109,22 +109,22 @@ const CardDetailPage: React.FC<CardDetailPageProps> = ({ card, onEdit, onPreview
         {/* 核心操作按钮 */}
         <div className="grid grid-cols-2 gap-3">
            <button 
-             onClick={onEdit}
+             onClick={() => setShowWechatModal(true)}
              className="flex flex-col items-center gap-1.5 p-3 bg-white rounded-2xl border border-gray-100 shadow-sm active:scale-95 transition-all group"
            >
-             <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center text-orange-500 group-hover:scale-110 transition-transform">
-               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+             <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center text-green-500 group-hover:scale-110 transition-transform">
+               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.27 10.15a.9.9 0 100-1.79.9.9 0 000 1.79zm7.46 0a.9.9 0 100-1.79.9.9 0 000 1.79zM12 4.1a8.55 8.55 0 00-8.6 8.3c0 1.55.43 3.01 1.2 4.26L3.5 19.5l3.15-1.01A8.53 8.53 0 0012 20.7a8.55 8.55 0 008.6-8.3 8.55 8.55 0 00-8.6-8.3zm0 14.8c-1.35 0-2.61-.35-3.7-.97l-2.14.68.7-2.07A6.74 6.74 0 015.1 12.4a6.79 6.79 0 0113.8 0 6.79 6.79 0 01-6.9 6.5zm7.3-8.86a.65.65 0 100-1.3.65.65 0 000 1.3z" /></svg>
              </div>
-             <span className="text-[10px] font-bold text-gray-600">修改</span>
+             <span className="text-[10px] font-bold text-gray-600">微信二维码</span>
            </button>
            <button 
-             onClick={() => card ? setShowShareModal(true) : onEdit()}
+             onClick={() => setShowShareModal(true)}
              className="flex flex-col items-center gap-1.5 p-3 bg-white rounded-2xl border border-gray-100 shadow-sm active:scale-95 transition-all group"
            >
              <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform">
                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
              </div>
-             <span className="text-[10px] font-bold text-gray-600">分享</span>
+             <span className="text-[10px] font-bold text-gray-600">分享名片</span>
            </button>
         </div>
 
